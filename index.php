@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>AET - AUDITORIUM BOOKING</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
@@ -48,13 +48,13 @@
               <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
               <form class="pt-3">
                 <div class="form-group">
-                  <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                  <input type="text" class="form-control form-control-lg" id="username" placeholder="Username">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                  <input type="password" class="form-control form-control-lg" id="password" placeholder="Password">
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN IN</a>
+                  <button class="btn btn-primary" type="button" id='login'>LOGIN</button>
                 </div>
                 
               </form>
@@ -78,7 +78,51 @@
   <script src="js/template.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/todolist.js"></script>
+  <script src="js/notifIt.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/notifIt.css">
   <!-- endinject -->
+  <script type="text/javascript">
+    $(document).ready(function(){
+      alert("hi");
+      $("#login").click(function(){
+        var username=$("#username").val();
+        var pass=$("#password").val();
+        $.ajax({
+          type:"POST",
+          url:"main/ajaxCalls/loginCheck.php",
+          dataType:"json",
+          data:{"username":username,"pass":pass},
+          success:function(res)
+          {
+            if(res.status=='Login'){
+               window.location='main/home.php';
+            }
+            else if(res.status=='Wrong Password'){
+                  notif({
+                      type: "error",
+                      msg: "<p><b>"+res.status+" <b></p>",
+                      position: "center",
+                      width: 500,
+                      height: 160,
+                      autohide: true
+                    });
+            }
+            else if(res.status=="Username is doesn't exist"){
+                  notif({
+                      type: "error",
+                      msg: "<p><b>"+res.status+" <b></p>",
+                      position: "center",
+                      width: 500,
+                      height: 160,
+                      autohide: true
+                    });
+            }
+          }
+        });
+      })
+    });
+  </script>
 </body>
 
 </html>
