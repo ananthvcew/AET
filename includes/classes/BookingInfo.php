@@ -41,11 +41,13 @@ class BookingInfo extends Dbconnection{
 			if($insertId){
 				return ["status"=>"Booked","msg"=>"Hall Booked and waitig for Approvel"];
 			}
-		}
-		
-
-
-		
+		}	
+	}
+	public function getBookingDetail(){
+		$sql="select * from ".$this->tablename." where date>='".$this->db->getpost('fdate')."' and date<='".$this->db->getpost('tdate')."' ";
+		$res=$this->db->GetResultsArray($sql);
+		return $res;
+			
 	}
 }
 ?>

@@ -16,5 +16,10 @@ class Department extends Dbconnection{
 	 	$res=$this->db->GetResultsArray($sql);
 	 	return $res;
 	 }
+	 public function getDepartmentName($id){
+		$sql="select * from ".$this->tablename." where dcode=".$id;
+		$res=$this->db->getAsIsArray($sql);
+		return $res['branch'];
+	}
 }
 ?>
