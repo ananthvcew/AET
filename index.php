@@ -84,7 +84,7 @@
   <!-- endinject -->
   <script type="text/javascript">
     $(document).ready(function(){
-      alert("hi");
+      //alert("hi");
       $("#login").click(function(){
         var username=$("#username").val();
         var pass=$("#password").val();

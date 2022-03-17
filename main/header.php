@@ -27,10 +27,14 @@ include'../includes/config.php';
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
   <style type="text/css">
+    /*body{
+      font-family: BookmanOld !important;
+    }*/
     .card {
-      background-color: navy !important;
+      background-color: #4b49ac !important;
       color: white !important;
       font-size: 20 !important;
+      font-family: BookmanOld !important;
     }
     input .form-control{
       height: 30px !important;

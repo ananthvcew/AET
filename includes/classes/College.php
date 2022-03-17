@@ -16,5 +16,10 @@ class College extends Dbconnection{
 		$res=$this->db->GetResultsArray($sql);
 		return $res;
 	} 
+	public function getCollegeName($id){
+		$sql="select * from ".$this->tablename." where ccode=".$id;
+		$res=$this->db->getAsIsArray($sql);
+		return $res['short'];
+	}
 }
 ?>
