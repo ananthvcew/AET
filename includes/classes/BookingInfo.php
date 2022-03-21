@@ -49,5 +49,17 @@ class BookingInfo extends Dbconnection{
 		return $res;
 			
 	}
+	public function updateBookingStatus(){
+		$update=[];
+		$update['approve_status']=$this->db->getpost('type');
+		$update['approved_by']=$_SESSION['id'];
+		$update['approved_at']=date('Y-m-d H:i:s');	
+		$res=$this->db->mysql_update($this->tablename,$update,"id=".$this->db->getpost('id'));
+		if($res){
+			return ["status"=>"Updated"];
+		}else{
+			return ["status"=>"Failed"];
+		}	
+	}
 }
 ?>

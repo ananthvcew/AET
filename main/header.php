@@ -49,6 +49,17 @@ include'../includes/config.php';
     /*textarea .form-control{
       height: 100px !important;
     }*/
+    .table td, .table th {
+      padding: 10px !important;
+      white-space: pre-wrap!important;
+    }
+    .table th{
+      background-color: lightgray!important;
+      text-align: center !important;
+      border: 1px solid white !important;
+      vertical-align: middle !important;
+    }
+
   </style>
 </head>
 <body>
