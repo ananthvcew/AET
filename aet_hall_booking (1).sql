@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 21, 2022 at 05:57 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 8.1.2
+-- Host: 127.0.0.1:3306
+-- Generation Time: Mar 21, 2022 at 12:21 PM
+-- Server version: 8.0.21
+-- PHP Version: 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,16 +27,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `auditorium`
 --
 
-CREATE TABLE `auditorium` (
-  `id` int(11) NOT NULL,
-  `ccode` int(11) NOT NULL,
+DROP TABLE IF EXISTS `auditorium`;
+CREATE TABLE IF NOT EXISTS `auditorium` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ccode` int NOT NULL,
   `name_auditorium` varchar(255) NOT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '0',
-  `created_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_by` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `auditorium`
@@ -51,35 +53,40 @@ INSERT INTO `auditorium` (`id`, `ccode`, `name_auditorium`, `status`, `created_b
 -- Table structure for table `booking_details`
 --
 
-CREATE TABLE `booking_details` (
-  `id` int(11) NOT NULL,
-  `auditorium` int(11) NOT NULL,
-  `ccode` int(11) NOT NULL,
-  `dcode` int(11) NOT NULL,
+DROP TABLE IF EXISTS `booking_details`;
+CREATE TABLE IF NOT EXISTS `booking_details` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `auditorium` int NOT NULL,
+  `ccode` int NOT NULL,
+  `dcode` int NOT NULL,
   `date` date NOT NULL,
   `timing` varchar(255) NOT NULL,
   `event_info` longtext NOT NULL,
   `invitation` varchar(255) NOT NULL,
-  `booking_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `booking_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `booking_by` varchar(255) NOT NULL,
   `contact_no` varchar(15) NOT NULL,
   `approve_status` enum('Approve','Pending','Cancelled','Postponed') NOT NULL DEFAULT 'Pending',
   `remark` longtext NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_by` int(11) DEFAULT NULL,
+  `created_by` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_by` int DEFAULT NULL,
   `update_at` timestamp NULL DEFAULT NULL,
-  `approved_by` int(11) DEFAULT NULL,
-  `approved_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `approved_by` int DEFAULT NULL,
+  `approved_at` timestamp NULL DEFAULT NULL,
+  `cgd` varchar(255) DEFAULT NULL,
+  `nfa` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `booking_details`
 --
 
-INSERT INTO `booking_details` (`id`, `auditorium`, `ccode`, `dcode`, `date`, `timing`, `event_info`, `invitation`, `booking_date`, `booking_by`, `contact_no`, `approve_status`, `remark`, `created_by`, `created_at`, `update_by`, `update_at`, `approved_by`, `approved_at`) VALUES
-(1, 1, 2001, 101, '2022-03-18', '10:00 AM to 01:00 PM', 'Annual Day', '', '2022-03-21 04:23:11', 'Mr.S.Sivaraman AP/CSE/VCEW', '9090909090', 'Approve', '', 0, '2022-03-16 22:18:31', NULL, NULL, 1, '2022-03-21 04:23:11'),
-(2, 1, 2016, 1, '2022-03-21', '10:00', 'meeting', '', '2022-03-21 04:42:31', 'Ananth', '999999999', 'Pending', '', 0, '2022-03-21 04:42:31', NULL, NULL, NULL, NULL);
+INSERT INTO `booking_details` (`id`, `auditorium`, `ccode`, `dcode`, `date`, `timing`, `event_info`, `invitation`, `booking_by`, `contact_no`, `approve_status`, `remark`, `created_by`, `created_at`, `update_by`, `update_at`, `approved_by`, `approved_at`, `cgd`, `nfa`) VALUES
+(1, 1, 2001, 101, '2022-03-18', '10:00 AM to 01:00 PM', 'Annual Day', '', 'Mr.S.Sivaraman AP/CSE/VCEW', '9090909090', 'Approve', '', 0, '2022-03-16 22:18:31', NULL, NULL, 1, '2022-03-21 04:23:11', NULL, NULL),
+(2, 1, 2016, 1, '2022-03-21', '10:00', 'meeting', '', 'Ananth', '999999999', 'Pending', '', 0, '2022-03-21 04:42:31', NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 1, 2001, 101, '2022-03-22', 'FN', 'Event', '', 'Mr.R.Dhamodharan AP/CSE/VCEW', '9898989898', 'Pending', '', 0, '2022-03-21 12:13:39', NULL, NULL, NULL, NULL, 'Dr. Manimaran', '2500');
 
 -- --------------------------------------------------------
 
@@ -87,11 +94,13 @@ INSERT INTO `booking_details` (`id`, `auditorium`, `ccode`, `dcode`, `date`, `ti
 -- Table structure for table `college`
 --
 
-CREATE TABLE `college` (
-  `ccode` int(20) NOT NULL,
+DROP TABLE IF EXISTS `college`;
+CREATE TABLE IF NOT EXISTS `college` (
+  `ccode` int NOT NULL AUTO_INCREMENT,
   `cname` varchar(100) NOT NULL,
-  `short` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `short` varchar(20) NOT NULL,
+  PRIMARY KEY (`ccode`)
+) ENGINE=MyISAM AUTO_INCREMENT=2022 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `college`
@@ -99,7 +108,6 @@ CREATE TABLE `college` (
 
 INSERT INTO `college` (`ccode`, `cname`, `short`) VALUES
 (2001, 'Vivekanandha College of Engineering for Women', 'VCEW'),
-(2002, 'Vivekanandha Institute of Engineering and Technology for Women', 'VIETW'),
 (2003, 'Vivekanandha College of Technology for Women', 'VCTW'),
 (2004, 'Vivekanandha College of Arts and Sciences for Women', 'VICAS'),
 (2005, 'Vivekanandha College for Women', 'VCW'),
@@ -126,11 +134,13 @@ INSERT INTO `college` (`ccode`, `cname`, `short`) VALUES
 -- Table structure for table `department`
 --
 
-CREATE TABLE `department` (
-  `ccode` int(11) NOT NULL,
+DROP TABLE IF EXISTS `department`;
+CREATE TABLE IF NOT EXISTS `department` (
+  `ccode` int NOT NULL,
   `dcode` varchar(20) NOT NULL,
   `branch` varchar(100) NOT NULL,
-  `short` varchar(20) NOT NULL
+  `short` varchar(20) NOT NULL,
+  PRIMARY KEY (`ccode`,`dcode`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -479,19 +489,21 @@ INSERT INTO `department` (`ccode`, `dcode`, `branch`, `short`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `ccode` int(11) NOT NULL,
-  `dcode` int(11) NOT NULL,
+  `ccode` int NOT NULL,
+  `dcode` int NOT NULL,
   `status` enum('0','1') NOT NULL DEFAULT '0',
-  `created_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_by` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_by` int DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
@@ -499,68 +511,6 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `pass`, `name`, `ccode`, `dcode`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
 (1, 'Admin', '3e89ebdb49f712c7d90d1b39e348bbbf', 'Admin', 1, 1, '0', 1, '2022-03-16 17:55:33', NULL, NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `auditorium`
---
-ALTER TABLE `auditorium`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `booking_details`
---
-ALTER TABLE `booking_details`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `college`
---
-ALTER TABLE `college`
-  ADD PRIMARY KEY (`ccode`);
-
---
--- Indexes for table `department`
---
-ALTER TABLE `department`
-  ADD PRIMARY KEY (`ccode`,`dcode`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `auditorium`
---
-ALTER TABLE `auditorium`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `booking_details`
---
-ALTER TABLE `booking_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `college`
---
-ALTER TABLE `college`
-  MODIFY `ccode` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2022;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
