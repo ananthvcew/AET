@@ -12,7 +12,7 @@ class BookingInfo extends Dbconnection{
 	}
 
 	public function getDateAvailble(){
-		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".$this->db->getpost('date')."'";
+		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".date('Y-m-d',strtotime($this->db->getpost('date')))."'";
 		$res=$this->db->GetResultsArray($sql);
 		if(count($res)>0){
 			return ["status"=>"NA","date"=>date("d-M-Y",strtotime($this->db->getpost('date')))];
@@ -21,7 +21,7 @@ class BookingInfo extends Dbconnection{
 		}
 	} 
 	public function bookingHall(){
-		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".$this->db->getpost('date')."'";
+		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".date('Y-m-d',strtotime($this->db->getpost('date')))."'";
 		$res=$this->db->GetResultsArray($sql);
 		if(count($res)>0){
 			return ["status"=>"NA","date"=>date("d-M-Y",strtotime($this->db->getpost('date')))];
@@ -31,12 +31,14 @@ class BookingInfo extends Dbconnection{
 			$insert['auditorium']=$this->db->getpost('hall');
 			$insert['ccode']=$this->db->getpost('ccode');
 			$insert['dcode']=$this->db->getpost('dcode');
-			$insert['date']=$this->db->getpost('date');
+			$insert['date']=date('Y-m-d',strtotime($this->db->getpost('date')));
 			$insert['timing']=$this->db->getpost('timing');
 			$insert['event_info']=$this->db->getpost('event_info');
 			$insert['booking_date']=date("Y-m-d H:i:s");
 			$insert['booking_by']=$this->db->getpost('booking_by');
 			$insert['contact_no']=$this->db->getpost('booking_cno');
+			$insert['nfa']=$this->db->getpost('audience');
+			$insert['cgd']=$this->db->getpost('cgd');
 			$insertId=$this->db->mysql_insert($this->tablename,$insert);
 			if($insertId){
 				return ["status"=>"Booked","msg"=>"Hall Booked and waitig for Approvel"];
@@ -61,5 +63,17 @@ class BookingInfo extends Dbconnection{
 			return ["status"=>"Failed"];
 		}	
 	}
+	public function bookedDate(){
+		$sql="select date from ".$this->tablename;
+		$res=$this->db->GetResultsArray($sql);
+		$date=[];
+		$i=0;
+		foreach($res as $row){
+
+			$date[$i]=date('m/d/Y',strtotime($row['date']));
+			$i=$i+1;
+		}
+		return $date;
+	} 
 }
 ?>
