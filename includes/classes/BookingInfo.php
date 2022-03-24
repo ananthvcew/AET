@@ -9,6 +9,7 @@ class BookingInfo extends Dbconnection{
 	function __construct() {
 		parent::__construct();
 		$this->db = new Dbconnection();
+		$hall = new Auditorium();		
 	}
 
 	public function getDateAvailble(){
@@ -39,9 +40,14 @@ class BookingInfo extends Dbconnection{
 			$insert['contact_no']=$this->db->getpost('booking_cno');
 			$insert['nfa']=$this->db->getpost('audience');
 			$insert['cgd']=$this->db->getpost('cgd');
+			$insert['email']=$this->db->getpost('email_id');
 			$insertId=$this->db->mysql_insert($this->tablename,$insert);
 			if($insertId){
-				return ["status"=>"Booked","msg"=>"Hall Booked and waitig for Approvel"];
+				$sql="select email from auditorium where id=".$this->db->getpost('hall');
+				$res=$this->db->getAsIsArray($sql);
+				$insert['adminEmail']=$res['email'];
+
+				return ["status"=>"Booked","msg"=>"Hall Booked and waitig for Approvel","data"=>$insert];
 			}
 		}	
 	}
@@ -54,11 +60,16 @@ class BookingInfo extends Dbconnection{
 	public function updateBookingStatus(){
 		$update=[];
 		$update['approve_status']=$this->db->getpost('type');
+		if($this->db->getpost('type')=='Cancelled'){
+			$update['remark']=$this->db->getpost('reason');			
+		}
 		$update['approved_by']=$_SESSION['id'];
 		$update['approved_at']=date('Y-m-d H:i:s');	
 		$res=$this->db->mysql_update($this->tablename,$update,"id=".$this->db->getpost('id'));
 		if($res){
-			return ["status"=>"Updated"];
+			$sql="select * from ".$this->tablename." where id=".$this->db->getpost('id');
+			$res=$this->db->getAsIsArray($sql);
+			return ["status"=>"Updated","data"=>$res];
 		}else{
 			return ["status"=>"Failed"];
 		}	
@@ -75,5 +86,6 @@ class BookingInfo extends Dbconnection{
 		}
 		return $date;
 	} 
+	
 }
 ?>

@@ -57,25 +57,30 @@ $res1=$obj2->bookedDate();
 	</div>
 </div>
 	<div class="row">
-	<div class="col-lg-6">
-		<label>Booking Person Name & Designation</label>
+	<div class="col-lg-4">
+		<label>Staff Name & Designation</label>
 		<input type="text" name="booking_by" id='booking_by' class="form-control" placeholder="Mr.S.Sivaraman AP/CSE/VCEW" >
 	</div>
 
 
-	<div class="col-lg-6">
-		<label>Booking Person Contact Number</label>
+	<div class="col-lg-4">
+		<label>Contact Number</label>
 		<input type="text" name="booking_cno" id='booking_cno' class="form-control" placeholder="9898989898" >
+	</div>
+	<div class="col-lg-4">
+		<label>No.of Audience</label>
+		<input type="text" name="audience" id='audience' class="form-control"  >
+		
 	</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-6">
-		<label>No.of Audience</label>
-		<input type="text" name="audience" id='audience' class="form-control"  >
+		<label>Email Id</label>
+		<input type="text" name="email_id" id='email_id' class="form-control"  >
 	</div>
 	<div class="col-lg-6">
 		<label>Chief Guest Detail </label>
-		<input type="text" name="cgd" id='cgd' class="form-control" placeholder="9898989898" >
+		<input type="text" name="cgd" id='cgd' class="form-control" >
 	</div>
 	</div>
 	<div class="row">

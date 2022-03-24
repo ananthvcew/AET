@@ -36,6 +36,49 @@
    <script src="../js/todolist.js"></script>
   <script src="../js/notifIt.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/notifIt.css">
+  <script type="text/javascript">
+    function phonenumber(inputtxt)
+{
+  var phoneno = /^\+?([6-9]{1})\)?([0-9]{4})?([0-9]{5})$/;
+  if((inputtxt.match(phoneno)))
+        {
+      return true;
+        }
+      else
+        {
+        return false;
+        }
+}
+function isEmail(email) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return regex.test(email);
+}
+        $(document).ready(function(){
+          $("#email").blur(function(){
+                    if(isEmail($("#email").val())==false){
+                  $("#email").addClass("errorCall");
+                    $("#email").css("border","1px solid red")
+                    $("#email").val('');
+                    $("#email").attr('placeholder','Please Enter Valid Email ID');
+
+                }else{
+                    $("#email").css("border","1px solid #ccc");
+                }
+                });
+          $("#cno").blur(function(){
+                    if(phonenumber($(this).val())==false){
+                       $(this).addClass("errorCall");
+                       $(this).css("border","1px solid red")
+                       $(this).val("");
+                       $(this).attr("placeholder","Please Enter Valid Phone Number");
+                    }
+                    else{
+                       $(this).css("border","1px solid lightgray")
+                    }
+                })
+         
+        })
+  </script>
 </body>
 
 </html>
