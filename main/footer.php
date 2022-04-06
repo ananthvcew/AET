@@ -36,6 +36,12 @@
    <script src="../js/todolist.js"></script>
   <script src="../js/notifIt.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/notifIt.css">
+  <script src="../js/calendar-gc.min.js"></script>
+  <script src="../js/calendar.js"></script>
+  <script src="../js/table2csv.js"></script>
+  <script src="../js/jquery.tablesorter.js"></script>
+  <script src="../js/jquery.tablesorter.widgets.js"></script>
+    <script src="../js/jquery.tablesorter.pager.js"></script>
   <script type="text/javascript">
     function phonenumber(inputtxt)
 {

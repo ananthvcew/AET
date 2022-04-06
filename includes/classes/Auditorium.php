@@ -13,9 +13,14 @@ class Auditorium extends Dbconnection
 		$res=$this->db->GetResultsArray($sql);
 		return $res;
 	}
+	public function getAuditoriumList(){
+		$sql="select * from ".$this->tablename." where ccode='".$_SESSION['ccode']."'";
+		$res=$this->db->GetResultsArray($sql);
+		return $res;
+	}
 	public function getEmail($id){
 		$sql="select email from ".$this->tablename." where id=".$id;
-		$res=$this->db->getAsIsArray($sql);
+		$res=$this->db->getAsIsArray($sql);	
 		return $res['email'];
 	}
 	public function getName($id){

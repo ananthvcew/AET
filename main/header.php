@@ -1,5 +1,8 @@
 <?php
 include'../includes/config.php';
+if($_SESSION['uid']==''){
+  header('Location:../index.php');
+}
 ?>
 <html lang="en">
 
@@ -26,6 +29,12 @@ include'../includes/config.php';
    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="../css/calendar-gc.min.css">
+  <link rel="stylesheet" href="../css/calendar.css">
+  <link rel="stylesheet" href="../css/theme.bootstrap_4.css">
+  <link rel="stylesheet" href="../css/jquery.tablesorter.pager.css">
+  <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" />
+
   <style type="text/css">
     /*body{
       font-family: BookmanOld !important;
@@ -59,6 +68,9 @@ include'../includes/config.php';
       border: 1px solid white !important;
       vertical-align: middle !important;
     }
+    #sorter th{
+      white-space: nowrap !important;
+    }
     .content-wrapper {
     background: #F5F7FF;
     padding: 1.375rem 1.375rem !important; 
@@ -83,6 +95,23 @@ include'../includes/config.php';
       counter-increment: serial-number;  /* Increment the serial number counter */
       content: counter(serial-number);  /* Display the counter */
     }
+    .brand-logo-mini{
+      width: 250px!important;
+      text-align: right !important;
+      padding-left: 50px !important;
+    }
+    @media (min-width: 992px){
+  .sidebar-icon-only .navbar .navbar-menu-wrapper {
+    width: calc(100% - 180px)!important;
+    }
+  }
+  @media (max-width: 991px){
+.navbar .navbar-menu-wrapper {
+    width: calc(100% - 180px);
+    padding-left: 15px;
+    padding-right: 11px;
+}
+}
   </style>
 </head>
 <body>
@@ -91,7 +120,7 @@ include'../includes/config.php';
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="../images/logo1.png" class="mr-2" alt="logo"/>AET - VEIW</a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../images/logo1.png" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../images/logo1.png" alt="logo"/>AET - VEIW</a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">

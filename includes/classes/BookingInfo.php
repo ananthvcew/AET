@@ -13,7 +13,7 @@ class BookingInfo extends Dbconnection{
 	}
 
 	public function getDateAvailble(){
-		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".date('Y-m-d',strtotime($this->db->getpost('date')))."'";
+		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".date('Y-m-d',strtotime($this->db->getpost('date')))."' and approve_status='Approve' and timing = '".$this->db->getpost('timing')."'";
 		$res=$this->db->GetResultsArray($sql);
 		if(count($res)>0){
 			return ["status"=>"NA","date"=>date("d-M-Y",strtotime($this->db->getpost('date')))];
@@ -22,7 +22,7 @@ class BookingInfo extends Dbconnection{
 		}
 	} 
 	public function bookingHall(){
-		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".date('Y-m-d',strtotime($this->db->getpost('date')))."'";
+		$sql="select * from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."' and date='".date('Y-m-d',strtotime($this->db->getpost('date')))."' and approve_status='Approve' and timing = '".$this->db->getpost('timing')."'";
 		$res=$this->db->GetResultsArray($sql);
 		if(count($res)>0){
 			return ["status"=>"NA","date"=>date("d-M-Y",strtotime($this->db->getpost('date')))];
@@ -37,10 +37,10 @@ class BookingInfo extends Dbconnection{
 			$insert['event_info']=$this->db->getpost('event_info');
 			$insert['booking_date']=date("Y-m-d H:i:s");
 			$insert['booking_by']=$this->db->getpost('booking_by');
-			$insert['contact_no']=$this->db->getpost('booking_cno');
+			$insert['contact_no']=$this->db->getpost('cno');
 			$insert['nfa']=$this->db->getpost('audience');
 			$insert['cgd']=$this->db->getpost('cgd');
-			$insert['email']=$this->db->getpost('email_id');
+			$insert['email']=$this->db->getpost('email');
 			$insertId=$this->db->mysql_insert($this->tablename,$insert);
 			if($insertId){
 				$sql="select email from auditorium where id=".$this->db->getpost('hall');
@@ -52,10 +52,13 @@ class BookingInfo extends Dbconnection{
 		}	
 	}
 	public function getBookingDetail(){
-		$sql="select * from ".$this->tablename." where date>='".$this->db->getpost('fdate')."' and date<='".$this->db->getpost('tdate')."' ";
+		if($this->db->getpost('hall')=='ALL'){
+		$sql="select * from ".$this->tablename." where date>='".$this->db->getpost('fdate')."' and date<='".$this->db->getpost('tdate')."' and auditorium in (select id from auditorium where ccode='".$_SESSION['ccode']."')";
+	}else{
+		$sql="select * from ".$this->tablename." where date>='".$this->db->getpost('fdate')."' and date<='".$this->db->getpost('tdate')."' and auditorium ='".$this->db->getpost('hall')."'";
+	}
 		$res=$this->db->GetResultsArray($sql);
 		return $res;
-			
 	}
 	public function updateBookingStatus(){
 		$update=[];
@@ -75,7 +78,7 @@ class BookingInfo extends Dbconnection{
 		}	
 	}
 	public function bookedDate(){
-		$sql="select date from ".$this->tablename;
+		$sql="select date from ".$this->tablename." where auditorium='".$this->db->getpost('hall')."'";
 		$res=$this->db->GetResultsArray($sql);
 		$date=[];
 		$i=0;
@@ -86,6 +89,11 @@ class BookingInfo extends Dbconnection{
 		}
 		return $date;
 	} 
+	public function getBookingInfo($status='Approve'){
+		$sql="select * from ".$this->tablename." where date>='".date('Y-m-d')."' and approve_status='".$status."' and auditorium=".$this->db->getpost('hall');
+		$res=$this->db->GetResultsArray($sql);
+		return $res;
+	}
 	
 }
 ?>

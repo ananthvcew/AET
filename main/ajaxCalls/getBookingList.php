@@ -1,5 +1,6 @@
 <?php
 include'../../includes/config.php';
+$obj3=new Auditorium();
 $obj=new BookingInfo();
 $res=$obj->getBookingDetail();
 $obj1=new College();
@@ -13,7 +14,7 @@ foreach($res as $row){
 	}else{
 		$dname=$obj2->getDepartmentName($row['dcode']);
 	}
-	$out .="<tr><td>$i</td><td>".date('d-M-Y',strtotime($row['date']))." / ".$row['timing']."</td><td>".$obj1->getCollegeName($row['ccode'])." / <br>".$dname."</td><td>".$row['event_info']."</td><td>".$row['cgd']."</td><td>".$row['nfa']."</td><td>".$row['booking_by']."<br>".$row['contact_no']."</td><td id='status".$row['id']."'>".$row['approve_status']."</td><td>";
+	$out .="<tr><td>$i</td><td>".$obj3->getName($row['auditorium'])."</td><td>".date('d-M-Y',strtotime($row['date']))." / ".$row['timing']."</td><td>".$obj1->getCollegeName($row['ccode'])." / <br>".$dname."</td><td>".$row['event_info']."</td><td>".$row['cgd']."</td><td>".$row['nfa']."</td><td>".$row['booking_by']."/ <br>".$row['contact_no']."</td><td id='status".$row['id']."'>".$row['approve_status']."</td><td>";
 	if($row['date']<date('Y-m-d')){
 		$out .='Event Completed';
 	}else{
