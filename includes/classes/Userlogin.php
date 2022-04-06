@@ -22,6 +22,7 @@ class Userlogin extends Dbconnection{
 					$_SESSION['name']=$res[0]['name'];
 					$_SESSION['ccode']=$res[0]['ccode'];
 					$_SESSION['dcode']=$res[0]['dcode'];
+					$_SESSION['page']=$res[0]['page'];
 					return ["status"=>"Login"];
 			}
 			else

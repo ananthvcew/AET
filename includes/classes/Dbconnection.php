@@ -1,7 +1,7 @@
 <?php
 class Dbconnection {
 	//Database variables to make a connection t
-	// public $Database_name = "vcewacin_canteen";
+	// public $Database_name = "vcewacin_aet_hall_booking";
 	// public $Host_name = "localhost";
 	// public $Database_user = "vcewacin_root";
 	// public $Database_pass = "Vcew@123";

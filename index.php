@@ -31,6 +31,18 @@
     .auth .brand-logo {
       margin-bottom: 0 !important; 
     }
+    .auth .auth-form-light  {
+      background: rgba(255, 255, 255, .7)!important;
+      color: navy!important;
+    }
+    .auth .auth-form-light input  {
+      color: navy!important;
+    }
+    .form-control{
+          /*border: 1px solid #67098d!important;*/
+          color: navy !important;
+          background-color: white !important;
+    }
   </style>
 </head>
 
@@ -38,8 +50,8 @@
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
-          <div class="col-lg-4 mx-auto">
+        <div class="row w-100 mx-auto">
+          <div class="col-lg-4">
             <div class="auth-form-light text-center py-4 px-4 px-sm-4">
               <div class="brand-logo">
                 <img src="images/logo1.png" alt="logo" ><br><br><h4>AET AUDITORIUM BOOKING</h4>
@@ -48,10 +60,10 @@
               <!-- <h6 class="font-weight-light">Sign in to continue.</h6> -->
               <form class="pt-3">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" id="username" placeholder="Username">
+                  <input type="text" class="form-control form-control-lg" id="username" autocomplete="off" placeholder="Username">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" id="password" placeholder="Password">
+                  <input type="password" class="form-control form-control-lg" id="password" autocomplete="off" placeholder="Password">
                 </div>
                 <div class="mt-3">
                   <button class="btn btn-primary" type="button" id='login'>LOGIN</button>

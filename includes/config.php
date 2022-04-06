@@ -9,6 +9,7 @@ spl_autoload_register(function ($class_name) {
 });
 //include_once '../vendor/autoload.php';
 //include_once 'barcode128.php';
+//require '../PHPMailer/PHPMailerAutoload.php';
 global $pagename;
 global $CONFIG_;
 $currentFile = $_SERVER["PHP_SELF"];
@@ -47,18 +48,5 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
 
     array_multisort($sort_col, $dir, $arr);
 }
-function itemCodeFormat($item_code){
-	$prefix='';
-	$len=strlen($item_code);
-	if($len<6){
-	for($i=1;$i<=(6-$len);$i++){
-		$prefix=$prefix."0";
-	}
-	$i_code=$prefix.$item_code;
-	}else
-	{
-	$i_code=$prefix.$item_code;
-	}
-	return $i_code;
-}
+
 ?>

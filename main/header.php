@@ -1,5 +1,8 @@
 <?php
 include'../includes/config.php';
+if($_SESSION['uid']==''){
+  header('Location:../index.php');
+}
 ?>
 <html lang="en">
 
@@ -26,6 +29,12 @@ include'../includes/config.php';
    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="../css/calendar-gc.min.css">
+  <link rel="stylesheet" href="../css/calendar.css">
+  <link rel="stylesheet" href="../css/theme.bootstrap_4.css">
+  <link rel="stylesheet" href="../css/jquery.tablesorter.pager.css">
+  <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css" />
+
   <style type="text/css">
     /*body{
       font-family: BookmanOld !important;
@@ -59,6 +68,9 @@ include'../includes/config.php';
       border: 1px solid white !important;
       vertical-align: middle !important;
     }
+    #sorter th{
+      white-space: nowrap !important;
+    }
     .content-wrapper {
     background: #F5F7FF;
     padding: 1.375rem 1.375rem !important; 
@@ -66,6 +78,39 @@ include'../includes/config.php';
     .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .lightGallery .image-tile, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto {
     padding-right: 10px !important;
     padding-left: 10px !important;
+    }
+    .modal .modal-dialog .modal-content .modal-body {
+    padding: 20px 20px !important;
+    }
+    .btn{
+      border-radius: 0px !important;
+      padding: 8 !important;
+      border: none !important;
+    }
+    .css-serial {
+      counter-reset: serial-number;  /* Set the serial number counter to 0 */
+    }
+
+    .css-serial td:first-child:before {
+      counter-increment: serial-number;  /* Increment the serial number counter */
+      content: counter(serial-number);  /* Display the counter */
+    }
+    .brand-logo-mini{
+      width: 250px!important;
+      text-align: right !important;
+      padding-left: 50px !important;
+    }
+    @media (min-width: 992px){
+  .sidebar-icon-only .navbar .navbar-menu-wrapper {
+    width: calc(100% - 180px)!important;
+    }
+  }
+  @media (max-width: 991px){
+.navbar .navbar-menu-wrapper {
+    width: calc(100% - 180px);
+    padding-left: 15px;
+    padding-right: 11px;
+}
 }
   </style>
 </head>
@@ -74,8 +119,8 @@ include'../includes/config.php';
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="../images/logo1.png" class="mr-2" alt="logo"/>VEIW</a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../images/logo1.png" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="../images/logo1.png" class="mr-2" alt="logo"/>AET - VEIW</a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="../images/logo1.png" alt="logo"/>AET - VEIW</a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -85,12 +130,12 @@ include'../includes/config.php';
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="../images/faces/face28.jpg" alt="profile"/> 
+              <img src="../images/admin.png" alt="profile"/> 
               
             </a>&nbsp;&nbsp;&nbsp;<h6><?=$_SESSION['name']?></h6>
           </li>
           <li class="nav-item d-none d-lg-flex">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="logout.php">
               <i class="ti-power-off text-primary"></i>
             </a>
           </li>
@@ -110,12 +155,26 @@ include'../includes/config.php';
               <span class="menu-title">Hall Booking</span>
             </a>
           </li>
+          <?php if($_SESSION['page']==1){ ?>
           <li class="nav-item">
             <a class="nav-link" href="hallApprove.php">
               <i class="icon-layout menu-icon"></i>
               <span class="menu-title">Booking List</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="auditorium.php">
+              <i class="icon-bar-graph menu-icon"></i>
+              <span class="menu-title">Auditorium List</span>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="user.php">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Users List</span>
+            </a>
+          </li> -->
+        <?php } ?>
         </ul>
       </nav>
       <div class="main-panel">
